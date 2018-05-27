@@ -1,0 +1,168 @@
+####misqhau
+
+
+include "$HOME/.cache/wal/colors-sway"
+set $mod Mod4
+set $term lxterminal
+set $menu dmenu_run
+floating_modifier $mod normal
+
+
+
+include "$HOME/.cache/wal/colors-sway"
+output <name> background $wallpaper <mode>
+client.focused $color0 $background $foreground $color7
+output eDP-1 resolution 1366x768
+position 0,0
+# input "2:14:SynPS/2_Synaptics_TouchPad" {
+#	dwt enabled
+#	tap enabled
+#	natural_scroll enabled
+#	middle_emulation enabled
+#}
+
+#------
+bindsym $mod+Return exec $term
+bindsym $mod+d exec dmenu_run -fn "Oswald:size=10" -p "Search"
+bindsym $mod+Shift+d rofi -show run
+bindsym $mod+w exec chromium
+bindsym $mod+f exec pcmanfm
+bindsym $mod+e exec leafpad
+bindsym $mod+y exec wal --theme random_light
+bindsym $mod+u exec wal --theme random_dark
+
+bindsym $mod+grave scratchpad show
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+equal sticky toggle
+
+bindsym $mod+q kill
+bindsym $mod+shift+c reload
+bindsym $mod+Shift+e restart
+bindsym $mod+ctrl+c exit
+
+#focus
+	bindsym $mod+left focus left
+	bindsym $mod+down focus down
+	bindsym $mod+up focus up
+	bindsym $mod+right focus right
+	bindsym $mod+ctrl+down focus mode_toggle
+	bindsym $mod+ctrl+up focus parent
+	bindsym $mod+1 workspace 1
+	bindsym $mod+2 workspace 2
+	bindsym $mod+3 workspace 3
+	bindsym $mod+4 workspace 4
+	bindsym $mod+5 workspace 5
+	bindsym $mod+6 workspace 6
+	bindsym $mod+7 workspace 7
+	bindsym $mod+8 workspace 8
+	bindsym $mod+9 workspace 9
+	bindsym $mod+0 workspace 10
+	
+
+
+
+#move
+#	bindsym $mod+Shift+left move left
+#	bindsym $mod+Shift+down move down
+#	bindsym $mod+Shift+up move up
+#	bindsym $mod+Shift+right move right	
+#		# move focused container to workspace
+#    	bindsym $mod+Shift+1 move container to workspace 1
+#    	bindsym $mod+Shift+2 move container to workspace 2
+#   	bindsym $mod+Shift+3 move container to workspace 3
+#    	bindsym $mod+Shift+4 move container to workspace 4
+#    	bindsym $mod+Shift+5 move container to workspace 5
+#    	bindsym $mod+Shift+6 move container to workspace 6
+#    	bindsym $mod+Shift+7 move container to workspace 7
+#    	bindsym $mod+Shift+8 move container to workspace 8
+#    	bindsym $mod+Shift+9 move container to workspace 9
+#    	bindsym $mod+Shift+0 move container to workspace 10
+
+# Layout stuff:
+#    bindsym $mod+s layout stacking
+#    bindsym $mod+w layout tabbed
+#    bindsym $mod+e layout toggle split
+#    bindsym $mod+f fullscreen
+#    bindsym $mod+t floating toggle
+#    bindsym $mod+ctrl+t focus mode_toggle
+
+bindsym $mod+z mode "resize"
+bindsym $mod+a mode "layout"
+bindsym $mod+s mode "gaps"
+bindsym $mod+x mode "move"
+
+mode "resize" {
+    bindsym left resize shrink width 20 ppt
+    bindsym down resize grow height 20 ppt
+    bindsym up resize shrink height 20 ppt
+    bindsym right resize grow width 20 ppt
+    bindsym n resize set width 600 height 700
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "layout" {
+    bindsym s layout stacking
+    bindsym t layout tabbed
+    bindsym g layout toggle split
+    bindsym f fullscreen
+    bindsym space floating toggle
+    bindsym shift+space focus mode_toggle
+    bindsym h layout splith
+    bindsym v layout splitv
+    bindsym up layout auto top
+    bindsym down layout auto bottom
+    bindsym left layout auto left
+    bindsym right layout auto right
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "gaps" {
+     bindsym Down gaps inner all minus 5
+    bindsym Left gaps outer all minus 5
+    bindsym Up gaps inner all plus 5
+    bindsym Right gaps outer all minus 5
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "move" {
+	bindsym left move left
+	bindsym down move down
+	bindsym up move up
+	bindsym right move right	
+		# move focused container to workspace
+    	bindsym 1 move container to workspace 1
+    	bindsym 2 move container to workspace 2
+    	bindsym 3 move container to workspace 3
+    	bindsym 4 move container to workspace 4
+    	bindsym 5 move container to workspace 5
+    	bindsym 6 move container to workspace 6
+    	bindsym 7 move container to workspace 7
+    	bindsym 8 move container to workspace 8
+    	bindsym 9 move container to workspace 9
+    	bindsym 0 move container to workspace 10
+    	bindsym Return mode "default"
+    	bindsym Escape mode "default"
+}
+
+	
+bar {
+status_command i3blocks
+    position top
+    font "Oswald 11"
+    colors {
+        statusline $color7
+        background $color0
+	separator #color7
+	focused_background $color0
+	focused_statusline $color7
+	focused_separator $color7
+	focused_workspace $color7 $color0 $color8
+	active_workspace $color8 $color7 $color0
+        inactive_workspace $color0 $color8 $color7
+    }
+}
+
+include /etc/sway/config.d/*
+exec --no-startup-id wal -i "$(< "${HOME}/.cache/wal/wal")"
+exec --no-startup-id nm-applet
+exec --no-startup-id /usr/lib/polkit-1/polkit-agent-helper-1

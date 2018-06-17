@@ -1,4 +1,4 @@
-# 4before
+# 6before
 
 ### variables
 set $mod Mod4
@@ -69,7 +69,6 @@ bindsym $mod+6 workspace $ws6
 
     bindsym $mod+f fullscreen
     bindsym $mod+space floating toggle
-    bindsym $mod+shift+space sticky toggle
     bindsym $mod+z mode "resize"
     bindsym $mod+shift+grave move scratchpad
 
@@ -78,7 +77,6 @@ bindsym $mod+6 workspace $ws6
     bindsym $mod+ctrl+left workspace prev
     bindsym $mod+ctrl+right workspace next
     bindsym $mod+tab workspace back_and_forth
-
 
     bindsym $mod+shift+1 move container to workspace $ws1
     bindsym $mod+shift+2 move container to workspace $ws2
@@ -97,10 +95,6 @@ mode "resize" {
     bindsym shift+down gaps inner all minus 5
     bindsym shift+right gaps outer all plus 5
     bindsym shift+left gaps outer all minus 5
-    bindsym ctrl+left layout auto left
-    bindsym ctrl+down layout auto bottom
-    bindsym ctrl+up layout auto top
-    bindsym ctrl+right layout auto rightr
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -134,10 +128,8 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
-include "$HOME/.cache/wal/colors-sway"
-#output <name> background $wallpaper fill
-#output DVI-I-1 resolution 1920x1080 position 1920,0 background $wallpaper fill
-output eDP-1 resolution 1366x768 position 0,0 background $wallpaper fill
+output <name> background $wallpaper fill
+output eDP-1 resolution 1366x768 position 0,0
 input "2:14:SynPS/2_Synaptics_TouchPad" {
        dwt disabled
        tap enabled

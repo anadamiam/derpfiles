@@ -1,0 +1,187 @@
+# Config for sway
+
+
+# default applications
+set $terminal termite
+set $browser chromium
+set $file_manager pcmanfm
+
+# i3pystatus path
+#set $status_bar "$HOME/.config/sway/scripts/i3pystatus/venv/bin/i3pystatus -c $HOME/.config/sway/scripts/i3pystatus/config.py"
+
+set $mod Mod4
+# alias Alt key - set $alt Mod1
+
+include "$HOME/.cache/wal/colors-sway"
+font pango:Roboto, FontAwesome 8
+default_border none
+focus_follows_mouse no
+workspace_auto_back_and_forth yes
+
+
+
+bindsym $mod+Return exec $terminal
+bindsym $mod+o exec $browser
+bindsym $mod+p exec $file_manager
+bindsym $mod+d exec dmenu_run-nb "$color15" -nf "$color0" -sb "$color0" -sf "$color15" -fn "Oswald:13" -p "s?"
+
+bindsym Print exec $fs_screenshot
+bindsym $mod+grave scratchpad show
+bindsym $mod+ctrl+c reload
+bindsym $mod+q kill
+bindsym $alt+F4 kill
+
+bindsym $mod+left focus left
+bindsym $mod+down focus down
+bindsym $mod+up focus up
+bindsym $mod+right focus right
+
+bindsym $mod+shift+left move left
+bindsym $mod+shift+down move down
+bindsym $mod+shift+up move up
+bindsym $mod+shift+right move right
+
+bindsym $mod+shift+grave move scratchpad
+bindsym $mod+ctrl+up focus parent
+bindsym $mod+ctrl+down focus child
+
+bindsym $mod+v split v
+bindsym $mod+b split h
+bindsym $mod+f fullscreen
+bindsym $mod+space floating toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+r focus mode_toggle
+
+# workspace names
+set $ws1  "1:  "
+set $ws2  "2:  "
+set $ws3  "3:  "
+set $ws4  "4:  "
+set $ws5  "5:  "
+set $ws6  "6: " 
+set $ws7  "7: 7"
+set $ws8  "8: 8"
+set $ws9  "9: 9"
+set $ws10 "10: 10"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+
+# move workspaces to another monitor
+bindsym Ctrl+$alt+left move workspace to output left
+bindsym Ctrl+$alt+down move workspace to output down
+bindsym Ctrl+$alt+up move workspace to output up
+bindsym Ctrl+$alt+right move workspace to output right
+
+
+
+bindsym $mod+z mode "resize"
+mode "resize" {
+    bindsym left resize shrink width 10 px or 10 ppt
+    bindsym down resize grow height 10 px or 10 ppt
+    bindsym up resize shrink height 10 px or 10 ppt
+    bindsym right resize grow width 10 px or 10 ppt
+    bindsym shift+up gaps inner all plus 5
+    bindsym shift+down gaps inner all minus 5
+    bindsym shift+right gaps outer all plus 5
+    bindsym shift+left gaps outer all minus 5
+
+    bindsym return mode "default"
+    bindsym escape mode "default"
+}
+
+    bindsym $mod+ctrl+l exec --no-startup-id wal --theme random_light
+    bindsym $mod+ctrl+d exec --no-startup-id wal --theme random_dark
+    bindsym $mod+ctrl+i exec --no-startup-id wal -i ".wals"
+    bindsym $mod+ctrl+m exec --no-startup-id leafpad ~/.config/sway/config
+
+
+
+# start i3pystatus to display status bar
+bar {
+    position top
+    status_command py3bar
+    font "Oswald 12"
+    colors {
+
+
+}
+}
+
+# volume control
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggleC
+
+
+include "$HOME/.cache/wal/colors-sway"
+client.focused 			$color5 $color0 $color5 $color7 $color5
+#client.focused			$color5 $color0 $color5 $color7 $color5
+client.focused_inactive 	$color0 $color5 $color7 $color0 $color5
+client.unfocused		$color7 $color5	$color7 $color0  $color5      
+client.urgent			$color0 $color0	$color7 $color0 $color5
+
+# sway specific options
+output LVDS-1 bg ~/.lvds-1.png fill
+output HDMI-1 bg ~/.hdmi-1.png fill
+input "2:14:ETPS/2_Elantech_Touchpad" {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+}
+
+
+
+
+
+# screen brightness control
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 5 && \
+#pkill -SIGUSR1 -f $status_bar
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 5 && \
+#pkill -SIGUSR1 -f $status_bar
+
+# media control
+#bindsym XF86AudioPlay exec playerctl play-pause || mpc toggle && \
+#pkill -SIGUSR1 -f $status_bar
+#bindsym XF86AudioStop exec playerctl stop || mpc stop && \
+#pkill -SIGUSR1 -f $status_bar
+#bindsym XF86AudioNext exec playerctl next || mpc next && \
+#pkill -SIGUSR1 -f $status_bar
+#bindsym XF86AudioPrev exec playerctl previous || mpc prev && \
+#pkill -SIGUSR1 -f $status_bar
+
+
+
+
+
+# system power management
+#set $mode_system Screen [l]ock, [e]xit sway, [s]uspend, [h]ibernate, [R]eboot, #[S]hutdown
+#mode "$mode_system" {
+#    bindsym l mode "default", exec $lock_screen
+#    bindsym e mode "default", exit
+#    bindsym s mode "default", exec $lock_screen, exec sleep 1 && systemctl suspend
+#    bindsym h mode "default", exec $lock_screen, exec sleep 1 && systemctl #hibernate
+#    bindsym Shift+r mode "default", exec systemctl reboot
+#    bindsym Shift+s mode "default", exit, exec systemctl poweroff
+
+# back to normal: Enter or Escape
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
+#bindsym $mod+Escape mode "$mode_system"

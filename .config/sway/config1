@@ -1,0 +1,157 @@
+include "$HOME/.cache/wal/colors-sway"
+
+
+
+set $mod Mod4
+set $term termite
+set $menu dmenu_run -nb "$color15" -nf "$color0" -sb "$color0" -sf "$color15" -fn "Oswald:13" -p "s?"
+
+#set $status_bar "$HOME/.config/sway/scripts/i3pystatus/venv/bin/i3pystatus -c $HOME/.config/sway/scripts/i3pystatus/config.py"
+
+
+
+
+
+
+
+
+	
+default_border none
+default_floating_border none
+hide_edge_borders smart
+gaps 5
+
+for_window [class=".*"] border pixel 5
+
+exec --no-startup-id wal -i ~/.wals
+
+    bindsym $mod+Return exec $term
+    bindsym $mod+shift+Return exec urxvt
+    bindsym $mod+d exec $menu
+    bindsym $mod+o exec --no-startup-id exec chromium
+    bindsym $mod+p exec --no-startup-id exec pcmanfm
+
+
+    bindsym $mod+q kill
+    floating_modifier $mod normal
+    bindsym $mod+Shift+c reload
+    bindsym $mod+Shift+e exit
+
+## Moving around:
+#
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+## Workspaces:
+#
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace 10
+
+    bindsym $mod+Shift+grave move scratchpad
+
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+0 move container to workspace 10
+
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    bindsym $mod+f fullscreen
+    bindsym $mod+space floating toggle
+
+    bindsym $mod+ctrl+down focus mode_toggle
+    bindsym $mod+ctrl+up focus parent
+
+    bindsym $mod+r mode "resize"
+    bindsym $mod+grave scratchpad show
+
+## Resizing containers:
+#
+mode "resize" {
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym shift+up gaps inner all plus 5
+    bindsym shift+down gaps inner all minus 5
+    bindsym shift+right gaps outer all plus 5
+    bindsym shift+left gaps outer all minus 5
+	    bindsym return mode "default"
+	    bindsym escape mode "default"
+}
+
+    bindsym $mod+ctrl+l exec --no-startup-id wal --theme random_light
+    bindsym $mod+ctrl+d exec --no-startup-id wal --theme random_dark
+    bindsym $mod+ctrl+i exec --no-startup-id wal -i ".wals"
+    bindsym $mod+ctrl+m exec --no-startup-id leafpad ~/.config/sway/config
+
+	# volume control
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+    bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+
+	# screen brightness control    
+    bindsym XF86MonBrightnessUp exec xbacklight -inc 5 && \
+    pkill -SIGUSR1 -f $status_bar
+    bindsym XF86MonBrightnessDown exec xbacklight -dec 5 && \
+    pkill -SIGUSR1 -f $status_bar
+
+
+
+include /etc/sway/config.d/*
+include "$HOME/.cache/wal/colors-sway"
+
+## Status Bar:
+##
+    bar {
+        status_command i3blocks
+            font "Oswald 12"
+            position top
+            colors {
+            	background $color0
+            	statusline $color7
+            	separator $color5
+C            	focused_workspace	$color8	$color7	$color8
+            	active_workspace	$color8	$color0	$color7
+            	inactive_workspace	$color8	$color0	$color7
+            	urgent_workspace	$color0	$color7	$color0
+            	}
+           }
+    bar {
+    client.focused 		$color5 $color0 $color5 $color7 $color5
+    client.focused_inactive 	$color0 $color5 $color7 $color0 $color5
+    client.unfocused		$color7 $color5	$color7 $color0  $color5     
+    client.urgent			$color0 $color0	$color7 $color0 $color5
+
+    output <name> background $wallpaper fill
+    output eDP-1 resolution 1366x768 position 0,0
+    input "2:7:SynPS/2_Synaptics_TouchPad" {
+	dwt enabled
+	tap enabled
+	natural_scroll disabled
+	middle_emulation enabled
+	}
